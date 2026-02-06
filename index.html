@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NeuroLearn - AI-Powered Education Platform</title>
+    <meta name="description" content="NeuroLearn is an AI-powered, gamified e-learning platform providing personalized, accessible education for all age groups.">
+    <meta name="keywords" content="e-learning, AI education, gamified learning, tech courses, exam prep, blockchain certification">
+    <meta name="author" content="NeuroLearn Technologies">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://neurolearn.tech/">
+    <meta property="og:title" content="NeuroLearn - AI-Powered Education Platform">
+    <meta property="og:description" content="Transform education with AI-powered gamified learning for all ages.">
+    <meta property="og:image" content="https://neurolearn.tech/images/og-image.jpg">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://neurolearn.tech/">
+    <meta property="twitter:title" content="NeuroLearn - AI-Powered Education Platform">
+    <meta property="twitter:description" content="Transform education with AI-powered gamified learning for all ages.">
+    <meta property="twitter:image" content="https://neurolearn.tech/images/twitter-image.jpg">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/public/favicon.ico">
+    
+    <!-- Fonts & Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- CSS -->
+    <style>
+        /* All the CSS from previous implementation */
+        :root {
+            --primary: #7c3aed;
+            --secondary: #4f46e5;
+            --accent: #3b82f6;
+            --light-purple: #a78bfa;
+            --light-blue: #93c5fd;
+            --light: #f8fafc;
+            --dark: #0f172a;
+            --gray: #64748b;
+            --light-gray: #e2e8f0;
+            --gradient-primary: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            --gradient-blue: linear-gradient(135deg, var(--accent) 0%, #60a5fa 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: #fff;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        h1 {
+            font-size: 3rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            color: var(--dark);
+            text-align: center;
+            margin-bottom: 2.5rem;
+            position: relative;
+        }
+
+        h2:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: var(--gradient-primary);
+            border-radius: 2px;
+        }
+
+        h3 {
+            font-size: 1.6rem;
+            color: var(--dark);
+        }
+
+        p {
+            margin-bottom: 1.2rem;
+            color: var(--gray);
+            font-size: 1.05rem;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        section {
+            padding: 80px 0;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 14px 32px;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            font-size: 1rem;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background: var(--gradient-primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(124, 58, 237, 0.3);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .btn-secondary:hover {
+            background-color: rgba(124, 58, 237, 0.05);
+            transform: translateY(-3px);
+        }
+
+        /* Header */
+        header {
+            background-color: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        .nav-links a:after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gradient-primary);
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-links a:hover:after {
+            width: 100%;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            font-size: 1.5rem;
+            background: none;
+            border: none;
+            color: var(--primary);
+            cursor: pointer;
+        }
+
+        /* Hero */
+        .hero {
+            padding-top: 150px;
+            padding-bottom: 100px;
+            background: linear-gradient(135deg, #f5f3ff 0%, #e0e7ff 100%);
+        }
+
+        .hero-content {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+        }
+
+        .hero-text {
+            flex: 1;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: var(--gradient-primary);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .hero-text p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+
+        .hero-btns {
+            display: flex;
+            gap: 15px;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .hero-image {
+            flex: 1;
+        }
+
+        .hero-image img {
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Features */
+        .features {
+            background-color: white;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+            border: 1px solid var(--light-gray);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Tech Courses */
+        .tech-courses {
+            background-color: var(--light);
+        }
+
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .course-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .course-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+        }
+
+        .course-header {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .course-header i {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+
+        .course-content {
+            padding: 25px;
+        }
+
+        .course-content h3 {
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+
+        .pilot-badge {
+            background-color: var(--accent);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-top: 15px;
+        }
+
+        /* Exam Prep */
+        .exam-prep {
+            background-color: white;
+        }
+
+        .exam-content {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+        }
+
+        .exam-text {
+            flex: 1;
+        }
+
+        .exam-features {
+            flex: 1;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .exam-feature {
+            background-color: var(--light);
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid var(--primary);
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .hero-content, .exam-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .hero-btns {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: white;
+                flex-direction: column;
+                padding: 20px;
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            }
+            
+            .nav-links.active {
+                display: flex;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .hero {
+                padding-top: 130px;
+            }
+            
+            .hero-btns {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: 250px;
+            }
+            
+            .exam-features {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 576px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            h2 {
+                font-size: 1.8rem;
+            }
+            
+            section {
+                padding: 60px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <i class="fas fa-brain"></i>
+                NeuroLearn
+            </div>
+            
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#courses">Tech Courses</a></li>
+                <li><a href="#exam">Exam Prep</a></li>
+                <li><a href="#signup">Get Started</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container hero-content">
+            <div class="hero-text">
+                <div class="hero-badge">
+                    <i class="fas fa-graduation-cap"></i> AI-Powered Gamified Learning
+                </div>
+                <h1>Transform Education for the Digital World</h1>
+                <p>NeuroLearn is an AI-powered, gamified e-learning platform providing deeply personalized, accessible, and affordable education for all age groups.</p>
+                <div class="hero-btns">
+                    <a href="#courses" class="btn btn-primary">Explore Tech Courses</a>
+                    <a href="#signup" class="btn btn-secondary">Start Free Trial</a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="NeuroLearn Platform" loading="lazy">
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="features" id="features">
+        <div class="container">
+            <h2>Core Platform Features</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h3>AI-Powered Adaptive Learning</h3>
+                    <p>Personalized learning paths that adapt to each user's pace, style, and comprehension level.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-gamepad"></i>
+                    </div>
+                    <h3>Gamified Engagement</h3>
+                    <p>Interactive games, badges, and rewards to improve retention and motivation.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-wifi-slash"></i>
+                    </div>
+                    <h3>Offline-First Access</h3>
+                    <p>Learn anywhere with offline access and automatic synchronization when back online.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-vr-cardboard"></i>
+                    </div>
+                    <h3>VR/AR Integration</h3>
+                    <p>Immersive learning experiences with virtual and augmented reality technologies.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-language"></i>
+                    </div>
+                    <h3>Multi-Language Support</h3>
+                    <p>Audio-visual content and interface available in multiple languages.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-link"></i>
+                    </div>
+                    <h3>Blockchain Certification</h3>
+                    <p>Tamper-proof, verifiable certificates stored on blockchain for integrity.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tech Courses -->
+    <section class="tech-courses" id="courses">
+        <div class="container">
+            <h2>Pilot Tech Courses</h2>
+            <p style="text-align: center; margin-bottom: 3rem; color: var(--gray);">Starting with these in-demand tech courses for easy pilot and scaling</p>
+            
+            <div class="courses-grid">
+                <div class="course-card">
+                    <div class="course-header">
+                        <i class="fas fa-code"></i>
+                        <h3>Software Development</h3>
+                    </div>
+                    <div class="course-content">
+                        <p>Full-stack development, DevOps, cloud computing, and modern engineering.</p>
+                        <div class="pilot-badge">Pilot Available</div>
+                    </div>
+                </div>
+                
+                <div class="course-card">
+                    <div class="course-header">
+                        <i class="fas fa-chart-bar"></i>
+                        <h3>Data Analysis</h3>
+                    </div>
+                    <div class="course-content">
+                        <p>Data visualization, statistical analysis, SQL, Python, and analytics tools.</p>
+                        <div class="pilot-badge">Pilot Available</div>
+                    </div>
+                </div>
+                
+                <div class="course-card">
+                    <div class="course-header">
+                        <i class="fas fa-bullhorn"></i>
+                        <h3>Digital Marketing</h3>
+                    </div>
+                    <div class="course-content">
+                        <p>SEO, social media marketing, content strategy, and analytics.</p>
+                        <div class="pilot-badge">Pilot Available</div>
+                    </div>
+                </div>
+                
+                <div class="course-card">
+                    <div class="course-header">
+                        <i class="fas fa-tasks"></i>
+                        <h3>Project Management</h3>
+                    </div>
+                    <div class="course-content">
+                        <p>Agile methodologies, project planning, and team collaboration tools.</p>
+                        <div class="pilot-badge">Pilot Available</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Exam Prep -->
+    <section class="exam-prep" id="exam">
+        <div class="container">
+            <h2>Exam Preparation Tools</h2>
+            <div class="exam-content">
+                <div class="exam-text">
+                    <h3>Access to Past Questions & Exam Prep</h3>
+                    <p>NeuroLearn provides comprehensive exam preparation tools including:</p>
+                    <ul style="color: var(--gray); margin: 20px 0; padding-left: 20px;">
+                        <li>Past exam questions from examination boards</li>
+                        <li>AI-generated practice tests tailored to your learning gaps</li>
+                        <li>Performance analytics and progress tracking</li>
+                        <li>Timed simulation exams for real test experience</li>
+                    </ul>
+                    <a href="#signup" class="btn btn-primary" style="margin-top: 20px;">Try Exam Prep Tools</a>
+                </div>
+                <div class="exam-features">
+                    <div class="exam-feature">
+                        <h4><i class="fas fa-database"></i> Question Bank</h4>
+                        <p>Thousands of past questions with detailed solutions</p>
+                    </div>
+                    <div class="exam-feature">
+                        <h4><i class="fas fa-brain"></i> AI Practice Tests</h4>
+                        <p>Adaptive tests focusing on weak areas</p>
+                    </div>
+                    <div class="exam-feature">
+                        <h4><i class="fas fa-chart-line"></i> Progress Analytics</h4>
+                        <p>Track improvement with detailed metrics</p>
+                    </div>
+                    <div class="exam-feature">
+                        <h4><i class="fas fa-stopwatch"></i> Timed Simulations</h4>
+                        <p>Practice under real exam conditions</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Signup -->
+    <section class="signup" id="signup" style="background: var(--gradient-primary); color: white; padding: 80px 0; text-align: center;">
+        <div class="container">
+            <h2 style="color: white;">Ready to Transform Your Learning?</h2>
+            <p style="color: rgba(255,255,255,0.9); max-width: 700px; margin: 0 auto 30px;">
+                Join NeuroLearn's pilot program and experience the future of education.
+            </p>
+            <div style="max-width: 500px; margin: 0 auto;">
+                <form id="waitlistForm" style="background: rgba(255,255,255,0.1); padding: 30px; border-radius: 10px;">
+                    <div style="margin-bottom: 20px;">
+                        <input type="email" placeholder="Enter your email address" required style="width: 100%; padding: 12px 20px; border: none; border-radius: 8px; font-family: 'Poppins', sans-serif;">
+                    </div>
+                    <button type="submit" class="btn" style="background: white; color: var(--primary); width: 100%;">
+                        Join Waitlist for Early Access
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer style="background: var(--dark); color: white; padding: 60px 0 30px;">
+        <div class="container">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; margin-bottom: 40px;">
+                <div>
+                    <div class="logo" style="color: white; margin-bottom: 20px;">
+                        <i class="fas fa-brain"></i>
+                        NeuroLearn
+                    </div>
+                    <p style="color: rgba(255,255,255,0.7);">
+                        AI-powered, gamified e-learning platform providing accessible education for all age groups.
+                    </p>
+                </div>
+                
+                <div>
+                    <h3 style="color: white;">Tech Courses</h3>
+                    <ul style="list-style: none;">
+                        <li><a href="#courses" style="color: rgba(255,255,255,0.7); text-decoration: none;">Software Development</a></li>
+                        <li><a href="#courses" style="color: rgba(255,255,255,0.7); text-decoration: none;">Data Analysis</a></li>
+                        <li><a href="#courses" style="color: rgba(255,255,255,0.7); text-decoration: none;">Digital Marketing</a></li>
+                        <li><a href="#courses" style="color: rgba(255,255,255,0.7); text-decoration: none;">Project Management</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 style="color: white;">Platform</h3>
+                    <ul style="list-style: none;">
+                        <li><a href="#features" style="color: rgba(255,255,255,0.7); text-decoration: none;">Features</a></li>
+                        <li><a href="#exam" style="color: rgba(255,255,255,0.7); text-decoration: none;">Exam Prep Tools</a></li>
+                        <li><a href="#signup" style="color: rgba(255,255,255,0.7); text-decoration: none;">Get Started</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div style="text-align: center; padding-top: 30px; border-top: 1px solid rgba(255,255,255,0.1); color: rgba(255,255,255,0.6); font-size: 0.9rem;">
+                <p>&copy; 2023 NeuroLearn Technologies. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const navLinks = document.getElementById('navLinks');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            mobileMenuBtn.innerHTML = navLinks.classList.contains('active') 
+                ? '<i class="fas fa-times"></i>' 
+                : '<i class="fas fa-bars"></i>';
+        });
+        
+        // Close menu on link click
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+            });
+        });
+        
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Waitlist form
+        const waitlistForm = document.getElementById('waitlistForm');
+        waitlistForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = this.querySelector('input[type="email"]').value;
+            
+            // In production, send to backend
+            alert(`Thank you! We've added ${email} to our waitlist. We'll contact you soon!`);
+            this.reset();
+        });
+        
+        // Performance optimization
+        window.addEventListener('load', () => {
+            // Lazy load images
+            const images = document.querySelectorAll('img[loading="lazy"]');
+            images.forEach(img => {
+                if (img.complete) {
+                    img.classList.add('loaded');
+                } else {
+                    img.addEventListener('load', () => {
+                        img.classList.add('loaded');
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
